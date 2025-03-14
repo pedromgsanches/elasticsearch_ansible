@@ -1,0 +1,19 @@
+---
+- name: Setup Elasticsearch
+  hosts: elasticsearch
+  become: true
+  
+  roles:
+    - usergroup
+    - directories
+    - binfiles
+    - certificates # ver main.yml.2 no role caso gerar diferente --> https://gersonrfn.medium.com/habilitando-ssl-https-no-elasticsearch-d70d0959692 | testar desta forma
+    - conffiles
+    - bootstrap
+
+#    - passwords #  /opt/elasticsearch/bin/elasticsearch/bin/elasticsearch-setup-passwords auto -u "https://essrv01:9200" |export ES_PATH_CONF=/opt/elasticsearch/conf/ | 
+
+# -- to do
+#    - register backup repo, cron backup
+#    - kibana
+#    - 
