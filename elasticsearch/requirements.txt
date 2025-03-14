@@ -1,0 +1,22 @@
+
+
+requistos ansible-server: 
+ - python3
+ - wget
+ - ansible
+
+requisitos servidores ES: 
+- oel8+, 
+- swapoff
+- /etc/security/limits.conf
+    elasticsearch  -  nofile  65535 
+    elasticsearch  -  nproc   4096
+    elasticsearch  -  memlock unlimited           
+- echo "vm.max_map_count=262144" >> /etc/sysctl.conf
+
+- volumes:
+  - /opt/elasticsearch/{bin,data,log,conf}
+
+- Volumes partilhados por todos os nós:
+  - /opt/elasticsearch/repo
+

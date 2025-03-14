@@ -1,0 +1,52 @@
+- name: Deploy elasticsearch.yml configuration
+  tags: conf, elasticsearch
+  template:
+    src: ./templates/elasticsearch.yml.j2
+    dest: "{{ es_conf_dir }}/elasticsearch.yml"
+    owner: "{{ es_user }}"
+    group: "{{ es_group }}"
+    mode: '0644'
+
+- name: Deploy jvm.options configuration
+  tags: conf, jvm
+  template:
+    src: ./templates/jvm.options.j2
+    dest: "{{ es_conf_dir }}/jvm.options"
+    owner: "{{ es_user }}"
+    group: "{{ es_group }}"
+    mode: '0644'
+
+- name: Deploy heapsize.options configuration
+  tags: conf, jvm
+  template:
+    src: ./templates/heapsize.options.j2
+    dest: "{{ es_conf_dir }}/jvm.options.d/heapsize.options"
+    owner: "{{ es_user }}"
+    group: "{{ es_group }}"
+    mode: '0644'
+
+- name: Deploy log4j2.properties configuration
+  tags: conf, jvm
+  copy:
+    src: ./templates/log4j2.properties
+    dest: "{{ es_conf_dir }}/log4j2.properties"
+    owner: "{{ es_user }}"
+    group: "{{ es_group }}"
+    mode: '0644'
+
+- name: Deploy elasticsearch.service.j2 configuration
+  tags: conf, systemd
+  template:
+    src: ./templates/elasticsearch.service.j2
+    dest: "/etc/systemd/system/elasticsearch.service"
+    owner: "{{ es_user }}"
+    group: "{{ es_group }}"
+    mode: '0644'
+
+- name: systemctl daemon-reload + enable elasticsearch | state=stopped
+  tags: conf, systemd
+  systemd:
+    name: elasticsearch
+    enabled: yes
+    state: stopped
+    daemon_reload: yes

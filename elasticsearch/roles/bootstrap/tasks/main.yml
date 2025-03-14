@@ -1,0 +1,9 @@
+- name: systemctl start
+  tags: systemd, startup
+  systemd:
+    name: elasticsearch
+    enabled: yes
+    state: started
+    daemon_reload: yes
+
+

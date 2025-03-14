@@ -1,0 +1,16 @@
+- name: Extract Elasticsearch
+  ansible.builtin.unarchive:
+    src: "./files/elasticsearch-{{ es_version }}-linux-{{ es_arch }}.tar.gz"
+    dest: "{{ es_bin_dir }}"
+    remote_src: no
+    owner: elasticsearch
+    group: elasticsearch
+
+- name: Create Current version symlink
+  file:
+    src: "{{ es_bin_dir }}/elasticsearch-{{ es_version }}"
+    dest: "{{ es_bin_dir }}/elasticsearch"
+    state: link
+    owner: elasticsearch
+    group: elasticsearch
+
