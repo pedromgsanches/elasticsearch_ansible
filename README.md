@@ -30,10 +30,13 @@ requisitos servidores ES:
 	- Certificado Cliente/Servidor para o bootstrap do cluster e https
 - ./RunPB.sh install.yml
 - Login numa das máquinas e set inicial das passwords:
-	- export ES_PATH_CONF=/opt/elasticsearch/conf/ && /opt/elasticsearch/bin/elasticsearch/bin/elasticsearch-setup-passwords auto -u "https://<servidor>:9200"
+	- export ES_PATH_CONF=/opt/elasticsearch/conf/ && /opt/elasticsearch/bin/elasticsearch/bin/elasticsearch-setup-passwords auto -u "https://$servidor:9200"
+ 	- guardar passwords em local seguro
 - ./RunPB.sh backups.yml
 
 ### Install Kibana
 - Configurar kibana.yml (variables) para especificidades kibana
 - ./RunPB.sh kibana.yml
-- Criar utilizador admin com os roles superuser, monitoring_user e kibana_admin | alternativamente criar role e criar users nominais para os users
+- Criar utilizador admin com os roles superuser, monitoring_user e kibana_admin
+	- alternativamente criar role e criar users nominais para os users
+	- guardar passwords em local seguro 
