@@ -1,4 +1,4 @@
-### 0- Requisitos servidores
+### Requisitos servidores
 
 requistos ansible-server:
  - python3
