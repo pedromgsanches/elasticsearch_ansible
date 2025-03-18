@@ -23,17 +23,17 @@ requisitos servidores ES:
 
 
 ### Install ElasticSearch
-1- Configurar inventory.ini para o caso pretendido e kibana.yml (variables) para especificidades kibana
-2- Executar DownloadBIN.sh para download de binários elasticsearch + kibana
-3- Executar certs/GenSelfCerts.sh ou adicionar os próprios certificados:
+- Configurar inventory.ini para o caso pretendido e kibana.yml (variables) para especificidades kibana
+- Executar DownloadBIN.sh para download de binários elasticsearch + kibana
+- Executar certs/GenSelfCerts.sh ou adicionar os próprios certificados:
 	- CA
 	- Certificado Cliente/Servidor para o bootstrap do cluster e https
-4- ./RunPB.sh install.yml
-5- Login numa das máquinas e set inicial das passwords:
+- ./RunPB.sh install.yml
+- Login numa das máquinas e set inicial das passwords:
 	- export ES_PATH_CONF=/opt/elasticsearch/conf/ && /opt/elasticsearch/bin/elasticsearch/bin/elasticsearch-setup-passwords auto -u "https://<servidor>:9200"
-6- ./RunPB.sh backups.yml
+- ./RunPB.sh backups.yml
 
 ### Install Kibana
-1- Configurar kibana.yml (variables) para especificidades kibana
-2- ./RunPB.sh kibana.yml
-3- Criar utilizador admin com os roles superuser, monitoring_user e kibana_admin | alternativamente criar role e criar users nominais para os users
+- Configurar kibana.yml (variables) para especificidades kibana
+- ./RunPB.sh kibana.yml
+- Criar utilizador admin com os roles superuser, monitoring_user e kibana_admin | alternativamente criar role e criar users nominais para os users
