@@ -5,3 +5,7 @@ cd files
 
 wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${VERSION}-linux-{$ARCH}.tar.gz
 
+wget https://artifacts.elastic.co/downloads/kibana/kibana-${VERSION}-linux-{$ARCH}.tar.gz
+
+
+

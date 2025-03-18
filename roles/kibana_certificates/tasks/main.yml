@@ -1,0 +1,39 @@
+- name: Deploy certificates | CA
+  tags: conf, certificates
+  copy:
+    src: ./certs/{{ ki_ssl_ca }}
+    dest: "{{ ki_conf_dir }}/{{ ki_ssl_ca }}"
+    owner: "{{ kibana_user }}"
+    group: "{{ kibana_group }}"
+    mode: '0400'
+    backup: yes
+
+- name: Deploy certificates | ES-CA
+  tags: conf, certificates
+  copy:
+    src: ./certs/{{ ki_es_ssl_ca }}
+    dest: "{{ ki_conf_dir }}/{{ ki_ssl_ca }}"
+    owner: "{{ kibana_user }}"
+    group: "{{ kibana_group }}"
+    mode: '0400'
+    backup: yes
+
+- name: Deploy certificates | Server Certificate
+  tags: conf, certificates
+  copy:
+    src: ./certs/{{ ssl_cert }}
+    dest: "{{ ki_conf_dir }}/{{ ki_ssl_cert }}"
+    owner: "{{ kibana_user }}"
+    group: "{{ kibana_group }}"
+    mode: '0400'
+    backup: yes
+
+- name: Deploy certificates | Server Cert Key
+  tags: conf, certificates
+  copy:
+    src: ./certs/{{ ssl_key }}
+    dest: "{{ ki_conf_dir }}/{{ ki_ssl_key }}"
+    owner: "{{ kibana_user }}"
+    group: "{{ kibana_group }}"
+    mode: '0400'
+    backup: yes

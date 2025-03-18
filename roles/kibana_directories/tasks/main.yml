@@ -1,0 +1,14 @@
+- name: Create Kibana installation directory
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ kibana_user }}"
+    group: "{{ kibana_group }}"
+    mode: 0755
+  loop:
+    - "{{ kibana_home }}"
+    - "{{ ki_bin_dir }}"
+    - "{{ ki_conf_dir }}"
+    - "{{ ki_data_dir }}"
+    - "{{ ki_logs_dir }}"
+

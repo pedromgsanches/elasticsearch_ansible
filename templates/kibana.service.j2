@@ -1,0 +1,22 @@
+[Unit]
+Description=Kibana
+Documentation=https://www.elastic.co
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+User={{ kibana_user }}
+Group={{ kibana_group }}
+Environment=KIBANA_CONFIG_DIR={{ ki_conf_dir }}
+Environment=NODE_OPTIONS="--max-old-space-size=4096"
+ExecStart={{ ki_bin_dir }}/bin/kibana -c {{ ki_conf_dir}}/kibana.yml
+Restart=always
+WorkingDirectory={{ kibana_home }}
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=kibana
+TimeoutStartSec=120
+
+[Install]
+WantedBy=multi-user.target

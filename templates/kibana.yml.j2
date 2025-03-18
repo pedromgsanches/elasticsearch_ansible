@@ -1,0 +1,31 @@
+# Kibana configuration file (kibana.yml.j2)
+server.host: "{{ kibana_host }}"
+server.port: {{ kibana_port }}
+elasticsearch.hosts: {{ elasticsearch_host }}
+elasticsearch.username: "{{ elasticsearch_username }}"
+elasticsearch.password: "{{ elasticsearch_password }}"
+#elasticsearch.password: ${elasticsearch.password}
+
+# Password is stored in keystore
+
+{% if kibana_ssl_enabled %}
+server.ssl.enabled: true
+server.ssl.certificate: "{{ ki_conf_dir }}/{{ ki_ssl_cert }}"
+server.ssl.key: "{{ ki_conf_dir }}/{{ ki_ssl_key }}"
+server.ssl.certificateAuthorities: "{{ ki_conf_dir }}/{{ ki_ssl_ca }}"
+elasticsearch.ssl.certificateAuthorities: [ "{{ ki_conf_dir }}/{{ ki_es_ssl_ca }}" ]
+{% endif %}
+
+# Monitoring settings
+monitoring.ui.container.elasticsearch.enabled: true
+
+# Logging configuration
+logging:
+  appenders:
+    file:
+      type: file
+      fileName: /opt/kibana/logs/kibana.log
+      layout:
+        type: pattern
+  root:
+    appenders: [file]

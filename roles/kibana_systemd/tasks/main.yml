@@ -1,0 +1,14 @@
+- name: Create systemd service file
+  tags: kibana_systemd
+  template:
+    src: templates/kibana.service.j2
+    dest: /etc/systemd/system/{{ kibana_service_name }}.service
+    owner: root
+    group: root
+    mode: 0644
+  notify: daemon reload kibana
+
+- name: restart kibana
+  systemd:
+    name: "{{ kibana_service_name }}"
+    state: restarted

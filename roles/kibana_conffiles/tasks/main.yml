@@ -1,0 +1,42 @@
+- name: Backup old keystore
+  command: "mv {{ ki_bin_dir }}/kibana/config/kibana.keystore {{ ki_bin_dir }}/kibana/config/kibana.keystore.backup"
+  ignore_errors: yes
+
+- name: Create Kibana keystore
+  command: "{{ ki_bin_dir }}/kibana/bin/kibana-keystore create"
+  args:
+    creates: "{{ ki_conf_dir }}/kibana.keystore"
+  become_user: "{{ kibana_user }}"
+  when: kibana_create_keystore | bool
+
+- name: Set Kibana keystore items
+  command: "{{ ki_bin_dir }}/kibana/bin/kibana-keystore add {{ item.name }} -x"
+  args:
+    stdin: "{{ item.value }}"
+  become_user: "{{ kibana_user }}"
+  with_items: "{{ kibana_keystore_items }}"
+  when: 
+    - kibana_create_keystore | bool
+    - item.state | default('present') == 'present'
+  no_log: true
+
+- name: Copy kibana keystore to ki_conf_dir
+  copy: 
+    src: "{{ ki_bin_dir }}/kibana/config/kibana.keystore"
+    dest: "{{ ki_conf_dir }}/kibana.keystore"
+    remote_src: yes
+    mode: 0640
+    owner: "{{ kibana_user }}"
+    group: "{{ kibana_group }}"
+  ignore_errors: yes
+
+- name: Configure Kibana
+  tags: kibana_conf_file
+  template:
+    src: templates/kibana.yml.j2
+    dest: "{{ ki_conf_dir }}/kibana.yml"
+    owner: "{{ kibana_user }}"
+    group: "{{ kibana_group }}"
+    mode: 0644
+  #notify: restart kibana
+

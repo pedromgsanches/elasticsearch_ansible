@@ -1,0 +1,16 @@
+- name: Extract Kibana
+  ansible.builtin.unarchive:
+    src: "./files/kibana-{{ kibana_version }}-linux-{{ es_arch }}.tar.gz"
+    dest: "{{ ki_bin_dir }}"
+    remote_src: no
+    owner: "{{ kibana_user }}"
+    group: "{{ kibana_user }}"
+
+- name: Create Current version symlink
+  file:
+    src: "{{ ki_bin_dir }}/kibana-{{ es_version }}"
+    dest: "{{ ki_bin_dir }}/kibana"
+    state: link
+    owner: "{{ kibana_user }}"
+    group: "{{ kibana_user }}"
+

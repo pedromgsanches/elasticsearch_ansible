@@ -1,0 +1,51 @@
+- name: Register Backup Repository
+  ansible.builtin.shell: |
+    curl --insecure -X PUT "https://{{ es_superuser }}:{{ es_superuser_password }}@{{ host1 }}:{{ http_port}}/_snapshot/backups?pretty" -H 'Content-Type: application/json' -d'
+    {
+      "type": "fs",
+      "settings": {
+        "location": "{{ es_repo_dir }}"
+      }
+    }
+    '
+  args:
+    executable: /bin/bash
+
+
+- name: Schedule Backup
+  ansible.builtin.shell: |
+    curl --insecure -X PUT "https://{{ es_superuser }}:{{ es_superuser_password }}@{{ host1 }}:{{ http_port}}/_slm/policy/daily_snapshots" -H 'Content-Type: application/json' -d'
+    {
+      "name": "<daily-snap-{now/d}>",
+      "schedule": "0 30 00 * * ?",
+      "repository": "backups",
+      "config": {
+        "include_global_state": true,
+        "feature_states": []
+      },
+      "retention": {
+        "expire_after": "{{ backup_expire }}",
+        "min_count": {{ backup_min_count }},
+        "max_count": {{ backup_max_count }}
+      }
+    }'
+  args:
+    executable: /bin/bash
+
+
+
+PUT _slm/policy/daily_snapshots
+{
+  "name": "<daily-snap-{now/d}>",
+  "schedule": "0 30 15 * * ?",
+  "repository": "backups",
+  "config": {
+    "include_global_state": true,
+    "feature_states": []
+  },
+  "retention": {
+    "expire_after": "2d",
+    "min_count": 1,
+    "max_count": 2
+  }
+}

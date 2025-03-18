@@ -1,0 +1,14 @@
+---
+- name: Setup Elasticsearch
+  hosts: elasticsearch
+  become: true
+  vars_prompt:
+    - name: es_superuser_password
+      prompt: superuser "elastic" password?
+      private: true
+  vars:
+    es_superuser: "elastic"
+
+  roles:
+    - backup
+

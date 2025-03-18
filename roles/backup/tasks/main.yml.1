@@ -1,0 +1,11 @@
+- name: Registar Repositorio para Backup
+  ansible.builtin.shell: |
+    curl -X PUT "https://{{ es_superuser }}:{{ es_superuser_password }}@{{ host1 }}:{{ http_port}}/_snapshot/backups?pretty" -H 'Content-Type: application/json' -d'
+    {
+      "type": "fs",
+      "settings": {
+        "location": "{{ es_repo_dir }}"
+      }
+    }
+    '
+  executable: /bin/bash

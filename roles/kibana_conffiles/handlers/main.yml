@@ -1,0 +1,5 @@
+- name: restart kibana
+  systemd:
+    name: "{{ kibana_service_name }}"
+    state: restarted
+

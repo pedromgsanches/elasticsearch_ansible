@@ -1,9 +1,10 @@
-## 0- Requisitos servidores
+# 0- Requisitos servidores
 
 requistos ansible-server:
  - python3
  - wget
  - ansible
+ - ansible-galaxy collection install community.elastic -vvv
 
 requisitos servidores ES:
 - oel8+,
@@ -23,20 +24,20 @@ requisitos servidores ES:
 
 
 
-## 1- Configurar inventory.ini para o caso pretendido
+# 1- Configurar inventory.ini para o caso pretendido
 
-## 2- Executar DownloadBIN.sh
+# 2- Executar DownloadBIN.sh
 
-## 3- Executar certs/GenSelfCerts.sh ou adicionar os próprios certificados:
+# 3- Executar certs/GenSelfCerts.sh ou adicionar os próprios certificados:
 	- CA
 	- Certificado Cliente/Servidor para o bootstrap do cluster e https
 
-## 4- Install_ES_Playbook.sh
+# 4- Install_ES_Playbook.sh
 
-## 5- Login numa das máquinas e set inicial das passwords:
+# 5- Login numa das máquinas e set inicial das passwords:
 	- export ES_PATH_CONF=/opt/elasticsearch/conf/ && /opt/elasticsearch/bin/elasticsearch/bin/elasticsearch-setup-passwords auto -u "https://<servidor>:9200"
 
-## 6- Backup_Playbook.sh
+# 6- Backup_Playbook.sh
 
-## 7- Kibana_Playbook.sh
+# 7- Kibana_Playbook.sh
 
