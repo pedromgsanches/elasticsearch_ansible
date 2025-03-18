@@ -16,10 +16,10 @@ requisitos servidores ES:
 - echo "vm.max_map_count=262144" >> /etc/sysctl.conf
 
 - volumes:
-  - /opt/elasticsearch/{bin,data,log,conf}
+  - /opt/elasticsearch/{bin,data,log,conf} | 5gb, 10gb, 1gb, 128mb
 
 - Volumes partilhados por todos os nós:
-  - /opt/elasticsearch/repo
+  - /opt/elasticsearch/repo | 20gb
 
 
 ### Install ElasticSearch
