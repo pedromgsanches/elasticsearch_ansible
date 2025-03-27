@@ -1,10 +1,28 @@
-- name: Extract Kibana
-  ansible.builtin.unarchive:
-    src: "./files/kibana-{{ kibana_version }}-linux-{{ es_arch }}.tar.gz"
-    dest: "{{ ki_bin_dir }}"
-    remote_src: no
+- name: Download Kibana
+  ansible.builtin.get_url:
+    url: https://artifacts.elastic.co/downloads/kibana/kibana-{{ kibana_version }}-linux-{{ es_arch }}.tar.gz
+    dest: "{{ ki_bin_dir }}/kibana-{{ kibana_version }}-linux-{{ es_arch }}.tar.gz"
+    mode: '0640'
     owner: "{{ kibana_user }}"
     group: "{{ kibana_user }}"
+
+# download remote, unarchive remote
+- name: Extract Kibana
+  ansible.builtin.unarchive:
+    src: "{{ ki_bin_dir }}/kibana-{{ kibana_version }}-linux-{{ es_arch }}.tar.gz"
+    dest: "{{ ki_bin_dir }}"
+    remote_src: yes
+    owner: "{{ kibana_user }}"
+    group: "{{ kibana_user }}"
+
+# download local, unarchive and send remote
+#- name: Extract Kibana
+#  ansible.builtin.unarchive:
+#    src: "./files/kibana-{{ kibana_version }}-linux-{{ es_arch }}.tar.gz"
+#    dest: "{{ ki_bin_dir }}"
+#    remote_src: no
+#    owner: "{{ kibana_user }}"
+#    group: "{{ kibana_user }}"
 
 - name: Create Current version symlink
   file:
@@ -14,3 +32,8 @@
     owner: "{{ kibana_user }}"
     group: "{{ kibana_user }}"
 
+- name: change files ownership # nao sei porque o owner/group no tar.gz e no symlink não estão a ser respeitados
+  tags: chowner
+  shell: 
+    cmd: "chown -R {{ kibana_user }}:{{ kibana_user }} {{ ki_bin_dir }}"
+    chdir: "{{ ki_bin_dir }}"

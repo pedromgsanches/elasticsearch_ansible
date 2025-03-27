@@ -24,7 +24,7 @@ logging:
   appenders:
     file:
       type: file
-      fileName: /opt/kibana/logs/kibana.log
+      fileName: "{{ ki_logs_dir }}/kibana.log"
       layout:
         type: pattern
   root:

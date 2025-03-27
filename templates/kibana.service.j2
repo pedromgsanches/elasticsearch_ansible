@@ -10,7 +10,7 @@ User={{ kibana_user }}
 Group={{ kibana_group }}
 Environment=KIBANA_CONFIG_DIR={{ ki_conf_dir }}
 Environment=NODE_OPTIONS="--max-old-space-size=4096"
-ExecStart={{ ki_bin_dir }}/bin/kibana -c {{ ki_conf_dir}}/kibana.yml
+ExecStart={{ ki_bin_dir }}/kibana/bin/kibana -c {{ ki_conf_dir}}/kibana.yml
 Restart=always
 WorkingDirectory={{ kibana_home }}
 StandardOutput=journal

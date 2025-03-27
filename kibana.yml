@@ -1,6 +1,6 @@
 ---
 - name: Install Kibana
-  hosts: kibana
+  hosts: elasticsearch
   become: yes
   vars_prompt:
     - name: es_superuser_password
@@ -9,7 +9,7 @@
   vars:
     kibana_version: "{{ es_version }}"
 
-    kibana_home: "/opt/kibana"
+    kibana_home: "{{ es_base }}/kibana"
     ki_bin_dir: "{{ kibana_home }}/bin"
     ki_conf_dir: "{{ kibana_home }}/conf"
     ki_data_dir: "{{ kibana_home }}/data"
@@ -28,10 +28,10 @@
     kibana_ssl_enabled: true
     kibana_create_keystore: true
 
-    ki_ssl_cert: dual.crt
-    ki_ssl_key: dual.key
-    ki_ssl_ca: ca.crt
-    ki_es_ssl_ca: ca.crt
+    ki_ssl_cert: bt-wcprd1.pem
+    ki_ssl_key: bt-wcprd1-key.pem
+    ki_ssl_ca: ca-prd.pem
+    ki_es_ssl_ca: ca-prd.pem
 
     kibana_keystore_items:
       - name: "elasticsearch.password"
@@ -39,10 +39,10 @@
         state: present
 
   roles:
-    - usergroup
-    - kibana_directories
-    - kibana_binfiles
-    - kibana_certificates
-    - kibana_conffiles
+    #- usergroup
+    #- kibana_directories
+    # - kibana_binfiles
+    #- kibana_certificates
+    # - kibana_conffiles
     - kibana_systemd
-    - # criar utilizador admin com os roles superuser, monitoring_user e kibana_admin | alternativamente criar role e criar users nominais para os users
+    # criar utilizador admin com os roles superuser, monitoring_user e kibana_admin | alternativamente criar role e criar users nominais para os users

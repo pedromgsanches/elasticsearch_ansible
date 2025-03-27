@@ -1,6 +1,5 @@
 - name: daemon reload kibana
   systemd:
-    name: "{{ kibana_service_name }}"
     state: reloaded
     daemon_reload: yes
     enabled: yes
